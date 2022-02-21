@@ -12,3 +12,21 @@ exports.findAll = (req, res) => {
             })
         });
 }
+
+exports.create = (req, res) => {
+    const post = new Post({
+        title: req.body.title,
+        body: req.body.body,
+        published: req.body.published ? req.body.published : false,
+    })
+
+    post.save()
+        .then((result) => {
+            res.send(result)
+        })
+        .catch((err) => {
+            res.status(409).send({
+                message: err.message || "something went wrong when creating post"
+            })
+        })
+}
