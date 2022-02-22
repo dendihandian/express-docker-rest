@@ -10,7 +10,8 @@ const db = require('./app/models/')
 db.mongoose
     .connect(db.url, {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        // useFindAndModify: true // no need to use when using mongodb 6+
     })
     .then(() => {
         console.log(`Database connected!`)
