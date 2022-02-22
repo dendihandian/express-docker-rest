@@ -36,6 +36,15 @@ exports.findOne = (req, res) => {
 
     Post.findById(id)
         .then((result) => {
+
+            if (!result) {
+                res.status(404).send({message: "Post not found"})
+            }
+
+            res.send({
+                message: "Post was updated"
+            })
+
             res.send(result)
         })
         .catch((err) => {
@@ -61,6 +70,26 @@ exports.update = (req, res) => {
         .catch((err) => {
             res.status(409).send({
                 message: err.message || "some error while update post"
+            })
+        })
+}
+
+exports.delete = (req, res) => {
+    const id = req.params.id
+
+    Post.findByIdAndRemove(id)
+        .then((result) => {
+            if (!result) {
+                res.status(404).send({message: "Post not found"})
+            }
+
+            res.send({
+                message: "Post was deleted"
+            })
+        })
+        .catch((err) => {
+            res.status(409).send({
+                message: err.message || "some error while delete post"
             })
         })
 }
